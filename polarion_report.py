@@ -1,4 +1,6 @@
-import datetime  
+#!/usr/bin/env python
+import datetime 
+
 from pylarion.test_run import TestRun  
 from pylarion.work_item import TestCase, Requirement  
 from pylarion.document import Document  
@@ -55,3 +57,11 @@ field_dict = {
 g.update_sheet(6,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='*'))
 g.update_sheet(6,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='@null'))
 g.update_sheet(6,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='passed'))
+field_dict = {
+    'env_tier': 'tier1',
+    'env_os.KEY': 'rhcos',
+    'env_storage.KEY': 'hostpath-provisioner',
+}
+g.update_sheet(8,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='*'))
+g.update_sheet(8,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='@null'))
+g.update_sheet(8,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='passed'))
