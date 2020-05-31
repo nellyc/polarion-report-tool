@@ -81,3 +81,15 @@ def find_number_of_TCs_per_status_and_run_fields_and_team(
         query = '(TEST_RECORDS:(' + product + '/' + run.test_run_id + ',' + status + ')) AND casecomponent.KEY:(' + team + ')'
         num_of_tests += TestCase.get_query_result_count(query)
     return num_of_tests
+
+def get_test_run_id(run_fields_dict, planned_in=PLANNED_IN, product=PRODUCT):
+    query = 'plannedin.KEY:'+planned_in
+    for key, value in run_fields_dict.iteritems():
+        query += ' AND ' + key + ':' + value 
+    testrun_list = TestRun.search(query=query, project_id=product)
+    # Assumption here is that there is only 1 test run with such values
+    # It may only be correct for CNV
+    if testrun_list:
+        run_id = testrun_list[0].test_run_id
+        return "https://polarion.engineering.redhat.com/polarion/#/project/CNV/testrun?id=" + run_id
+    return ''

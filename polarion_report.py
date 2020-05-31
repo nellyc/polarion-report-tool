@@ -36,32 +36,14 @@ g.update_sheet(28,4, automation_coverage("manualonly", "(high medium low)"))
 g.update_sheet(44,2, find_number_of_TCs_per_status(status='*'))
 g.update_sheet(44,3, find_number_of_TCs_per_status(status='@any'))
 g.update_sheet(44,4, find_number_of_TCs_per_status(status='@null'))
-g.update_sheet(44,6, find_number_of_TCs_per_status(status='passed'))
+g.update_sheet(44,5, find_number_of_TCs_per_status(status='passed'))
 g.update_sheet(44,6, find_number_of_TCs_per_status(status='failed'))
 g.update_sheet(44,7, find_number_of_TCs_per_status(status='blocked'))
 
 # Test runs execution status per plan and run properties
-field_dict = {
-    'env_tier': 'tier1',
-    'env_os.KEY': 'rhcos',
-    'env_storage.KEY': 'nfs',
-}
-g.update_sheet(5,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='*'))
-g.update_sheet(5,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='@null'))
-g.update_sheet(5,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='passed'))
-field_dict = {
-    'env_tier': 'tier1',
-    'env_os.KEY': 'rhcos',
-    'env_storage.KEY': 'ocs-storagecluster-ceph-rbd',
-}
-g.update_sheet(6,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='*'))
-g.update_sheet(6,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='@null'))
-g.update_sheet(6,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='passed'))
-field_dict = {
-    'env_tier': 'tier1',
-    'env_os.KEY': 'rhcos',
-    'env_storage.KEY': 'hostpath-provisioner',
-}
-g.update_sheet(8,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='*'))
-g.update_sheet(8,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='@null'))
-g.update_sheet(8,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='passed'))
+row_number = 5
+for curr in field_dicts_list:
+    g.update_sheet(row_number,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dicts[curr], status='*'))
+    g.update_sheet(row_number,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dicts[curr], status='passed'))
+    g.update_sheet(row_number,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dicts[curr], status='@null'))
+    row_number += 1
