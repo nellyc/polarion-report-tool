@@ -70,53 +70,26 @@ def find_number_of_TCs_per_status_and_run_fields(
         num_of_tests += TestCase.get_query_result_count(query)
     return num_of_tests
 
+def find_number_of_TCs_per_status_and_run_fields_and_team(
+    team, run_fields_dict, status='*', planned_in=PLANNED_IN, product=PRODUCT):
+    query = 'plannedin.KEY:'+planned_in
+    for key, value in run_fields_dict.iteritems():
+        query += ' AND ' + key + ':' + value 
+    testrun_list = TestRun.search(query=query, project_id=product)
+    num_of_tests = 0
+    for run in testrun_list:
+        query = '(TEST_RECORDS:(' + product + '/' + run.test_run_id + ',' + status + ')) AND casecomponent.KEY:(' + team + ')'
+        num_of_tests += TestCase.get_query_result_count(query)
+    return num_of_tests
 
-g = gapi.GoogleSpreadSheetAPI(SPREADSHEET_NAME, "PQI Metrics")
-
-# Requirements coverage 
-g.update_sheet(2, 1, get_number_of_reqs_by_planned_in())
-g.update_sheet(3, 1, get_number_of_reqs_by_planned_in_with_linked_work_items())
-
-# Automation coverage and approved
-g.update_sheet(22, 2, testcase_approved_automated("critical", True, False))
-g.update_sheet(22, 3, testcase_approved_automated("critical", True, True))
-g.update_sheet(22, 4, testcase_approved_automated("critical", False, False))
-g.update_sheet(22, 6, testcase_approved_automated("critical", False, True))
-g.update_sheet(23, 6, testcase_approved_automated("(high medium low)", True, False))
-g.update_sheet(23, 3, testcase_approved_automated("(high medium low)", True, True))
-g.update_sheet(23, 4, testcase_approved_automated("(high medium low)", False, False))
-g.update_sheet(23, 6, testcase_approved_automated("(high medium low)", False, True))
-
-# Automation coverage 
-g.update_sheet(27,2, automation_coverage("automated", "critical"))
-g.update_sheet(27,3, automation_coverage("notautomated", "critical"))
-g.update_sheet(27,4, automation_coverage("manualonly", "critical"))
-g.update_sheet(28,2, automation_coverage("automated", "(high medium low)"))
-g.update_sheet(28,3, automation_coverage("notautomated", "(high medium low)"))
-g.update_sheet(28,4, automation_coverage("manualonly", "(high medium low)"))
-
-# Test runs execution status per plan
-g.update_sheet(44,2, find_number_of_TCs_per_status(status='*'))
-g.update_sheet(44,3, find_number_of_TCs_per_status(status='@any'))
-g.update_sheet(44,4, find_number_of_TCs_per_status(status='@null'))
-g.update_sheet(44,6, find_number_of_TCs_per_status(status='passed'))
-g.update_sheet(44,6, find_number_of_TCs_per_status(status='failed'))
-g.update_sheet(44,7, find_number_of_TCs_per_status(status='blocked'))
-
-# Test runs execution status per plan and run properties
-field_dict = {
-    'env_tier': 'tier1',
-    'env_os.KEY': 'rhcos',
-    'env_storage.KEY': 'nfs',
-}
-g.update_sheet(5,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='*'))
-g.update_sheet(5,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='@null'))
-g.update_sheet(5,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='passed'))
-field_dict = {
-    'env_tier': 'tier1',
-    'env_os.KEY': 'rhcos',
-    'env_storage.KEY': 'ocs-storagecluster-ceph-rbd',
-}
-g.update_sheet(6,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='*'))
-g.update_sheet(6,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='@null'))
-g.update_sheet(6,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dict, status='passed'))
+def get_test_run_id(run_fields_dict, planned_in=PLANNED_IN, product=PRODUCT):
+    query = 'plannedin.KEY:'+planned_in
+    for key, value in run_fields_dict.iteritems():
+        query += ' AND ' + key + ':' + value 
+    testrun_list = TestRun.search(query=query, project_id=product)
+    # Assumption here is that there is only 1 test run with such values
+    # It may only be correct for CNV
+    if testrun_list:
+        run_id = testrun_list[0].test_run_id
+        return "https://polarion.engineering.redhat.com/polarion/#/project/CNV/testrun?id=" + run_id
+    return ''

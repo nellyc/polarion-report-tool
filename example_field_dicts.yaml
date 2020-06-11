@@ -1,0 +1,9 @@
+field_dict_tier1: {
+    'env_tier': 'tier1',
+    'env_storage.KEY': 'nfs',
+}
+field_dict_tier2: {
+    'env_tier': 'tier2',
+    'env_os.KEY': 'el7',
+    'env_storage.KEY': 'iscsi',
+}
