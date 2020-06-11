@@ -3,19 +3,22 @@ import sys
 import os
 import google_api as gapi
 
+
+# [CHANGE NEEDED] Adjust yamls to your needs
+with open('./example_team.yaml') as f:
+    team_list = yaml.load(f)
+with open('./example_field_dicts_list.yaml') as f:
+    field_dicts_list = yaml.load(f)
+with open('./example_field_dicts.yaml') as f:
+    field_dicts = yaml.load(f)
+# Put your Polarion URL here, including project, this is used to create hyperlinks to test runs
+POLARION_FULL_URL = 'https://my.polarion.com/polarion/#/project/MYPROJECT/'
+
 # # [CHANGE NEEDED] Add the relevant information for you report
 cfg_path = os.path.expanduser('~/.gapi/personal_cfg.yml')
 
 with open(cfg_path, 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
-
-# [CHANGE NEEDED] Adjust yamls to your needs
-with open('example_team.yaml') as f:
-    team_list = yaml.load(f)
-with open('example_field_dicts_list.yaml') as f:
-    field_dicts_list = yaml.load(f)
-with open('example_field_dicts.yaml') as f:
-    field_dicts = yaml.load(f)
 
 if len(sys.argv) != 2:
     raise IndexError("You must provide the spreadsheet name to work with")
@@ -27,3 +30,17 @@ PRODUCT = g.get_cell_value(2, 1)
 VERSION = g.get_cell_value(2, 4)
 PLANNED_IN = g.get_cell_value(2,5)
 
+CRITICAL = 'critical'
+H_M_L = '(high medium low)'
+
+#statuses
+PLANNED = '*'
+ATTEMPTED = '@any'
+NOT_RUN = '@null'
+PASSED = 'passed'
+FAILED = 'failed'
+BLOCKED = 'blocked'
+
+AUTOMATED = 'automated'
+NOT_AUTOMATED = 'notautomated'
+MANUAL_ONLY = 'manualonly'

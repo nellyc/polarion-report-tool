@@ -87,9 +87,9 @@ def get_test_run_id(run_fields_dict, planned_in=PLANNED_IN, product=PRODUCT):
     for key, value in run_fields_dict.iteritems():
         query += ' AND ' + key + ':' + value 
     testrun_list = TestRun.search(query=query, project_id=product)
-    # Assumption here is that there is only 1 test run with such values
-    # It may only be correct for CNV
+    # There is an assumption here that there is only 1 test run with such values
+    # Adjust if your case is different 
     if testrun_list:
         run_id = testrun_list[0].test_run_id
-        return "https://polarion.engineering.redhat.com/polarion/#/project/CNV/testrun?id=" + run_id
+        return POLARION_FULL_URL + 'testrun?id=' + run_id
     return ''
