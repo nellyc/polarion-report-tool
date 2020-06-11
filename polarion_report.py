@@ -40,10 +40,3 @@ g.update_sheet(44,5, find_number_of_TCs_per_status(status='passed'))
 g.update_sheet(44,6, find_number_of_TCs_per_status(status='failed'))
 g.update_sheet(44,7, find_number_of_TCs_per_status(status='blocked'))
 
-# Test runs execution status per plan and run properties
-row_number = 5
-for curr in field_dicts_list:
-    g.update_sheet(row_number,11, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dicts[curr], status='*'))
-    g.update_sheet(row_number,12, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dicts[curr], status='passed'))
-    g.update_sheet(row_number,13, find_number_of_TCs_per_status_and_run_fields(run_fields_dict=field_dicts[curr], status='@null'))
-    row_number += 1
