@@ -61,7 +61,7 @@ def find_number_of_TCs_per_status(status='*', planned_in=PLANNED_IN, product=PRO
 def find_number_of_TCs_per_status_and_run_fields(
     run_fields_dict, status='*', planned_in=PLANNED_IN, product=PRODUCT):
     query = 'plannedin.KEY:'+planned_in
-    for key, value in run_fields_dict.iteritems():
+    for key, value in run_fields_dict.items():
         query += ' AND ' + key + ':' + value 
     testrun_list = TestRun.search(query=query, project_id=product)
     num_of_tests = 0
@@ -73,7 +73,7 @@ def find_number_of_TCs_per_status_and_run_fields(
 def find_number_of_TCs_per_status_and_run_fields_and_team(
     team, run_fields_dict, status='*', planned_in=PLANNED_IN, product=PRODUCT):
     query = 'plannedin.KEY:'+planned_in
-    for key, value in run_fields_dict.iteritems():
+    for key, value in run_fields_dict.items():
         query += ' AND ' + key + ':' + value 
     testrun_list = TestRun.search(query=query, project_id=product)
     num_of_tests = 0
@@ -84,7 +84,7 @@ def find_number_of_TCs_per_status_and_run_fields_and_team(
 
 def get_test_run_id(run_fields_dict, planned_in=PLANNED_IN, product=PRODUCT):
     query = 'plannedin.KEY:'+planned_in
-    for key, value in run_fields_dict.iteritems():
+    for key, value in run_fields_dict.items():
         query += ' AND ' + key + ':' + value 
     testrun_list = TestRun.search(query=query, project_id=product)
     # There is an assumption here that there is only 1 test run with such values
