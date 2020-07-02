@@ -14,12 +14,6 @@ with open('./example_field_dicts.yaml') as f:
 # Put your Polarion URL here, including project, this is used to create hyperlinks to test runs
 POLARION_FULL_URL = 'https://my.polarion.com/polarion/#/project/MYPROJECT/'
 
-# # [CHANGE NEEDED] Add the relevant information for you report
-cfg_path = os.path.expanduser('~/.gapi/personal_cfg.yml')
-
-with open(cfg_path, 'r') as ymlfile:
-    cfg = yaml.load(ymlfile)
-
 if len(sys.argv) != 2:
     raise IndexError("You must provide the spreadsheet name to work with")
 
@@ -32,6 +26,7 @@ PLANNED_IN = g.get_cell_value(2,5)
 
 CRITICAL = 'critical'
 H_M_L = '(high medium low)'
+ANY_IMPORTANCE = '(critical high medium low)'
 
 #statuses
 PLANNED = '*'

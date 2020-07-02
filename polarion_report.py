@@ -5,6 +5,8 @@ from pylarion.test_run import TestRun
 from pylarion.work_item import TestCase, Requirement  
 from pylarion.document import Document  
 
+import gspread
+
 from config import *
 from helpers import *
 
@@ -40,3 +42,19 @@ g.update_sheet(44,5, find_number_of_TCs_per_status(status=PASSED))
 g.update_sheet(44,6, find_number_of_TCs_per_status(status=FAILED))
 g.update_sheet(44,7, find_number_of_TCs_per_status(status=BLOCKED))
 
+# Automation coverage trend
+gc = gspread.service_account()
+now = datetime.datetime.now()
+g = gc.open(SPREADSHEET_NAME)
+worksheet = g.worksheet("Automation coverage")
+
+worksheet.insert_rows(
+    [[
+         now.strftime("%m-%d-%y"), 
+         automation_coverage(AUTOMATED, ANY_IMPORTANCE), 
+         automation_coverage(NOT_AUTOMATED, ANY_IMPORTANCE), 
+         automation_coverage(MANUAL_ONLY, ANY_IMPORTANCE),
+         "=B2/sum(B2:D2)"
+    ]], row=2,
+    value_input_option='USER_ENTERED'
+)
