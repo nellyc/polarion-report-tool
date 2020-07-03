@@ -16,12 +16,13 @@ This tool will allow you to create a Quality dashboard for your product with Pol
 ![alt text](https://github.com/nellyc/polarion-report-tool/blob/master/images/test_run_by_field.png)
 
 5. fetching test run status by field & team
-![alt text](https://github.com/nellyc/polarion-report-tool/blob/master/images/test_run_by_field_and_team.
-png) 
+![alt text](https://github.com/nellyc/polarion-report-tool/blob/master/images/test_run_by_field_and_team.png) 
 
 6. execution status by version
 ![alt text](https://github.com/nellyc/polarion-report-tool/blob/master/images/execution_by_version.png)
 
+7. Automation coverage trend
+![alt text](https://github.com/nellyc/polarion-report-tool/blob/master/images/automation_trend.png)
 
 ## Requires:
 1. Copy the example xls template to your google drive, and update the 'Dashboard configuration' tab with your product data
@@ -32,17 +33,18 @@ png)
     place the google_api_secret.json under ~/.gapi/google_api_secret.json
 
     Ensure you give 'Edit' permissions in your copied spreadsheet, to the 'client' in this json file
-3. pylarion (requires python2)
+3. pylarion
 4. update example_team.yaml, example_field_dicts.yaml & example_field_dicts_list.yaml with the parameters you want to get the reports for
 
 ## Usage:
-1. executing python2 'polarion_report.py "YOUR TEMPLATE - Quality Dashboard"' will fetch: 
-   requirements coverage
-   approved/automated coverage
-   automation coverage
-2. executing python2 'run_report.py "YOUR TEMPLATE - Quality Dashboard"'
+1. executing python3 'polarion_report.py "YOUR TEMPLATE - Quality Dashboard"' will: 
+   fetch requirements coverage
+   fetch approved/automated coverage
+   fetch current automation coverage
+   update current automation coverage on the automation coverage trend table & graph
+2. executing python3 'run_report.py "YOUR TEMPLATE - Quality Dashboard"'
    will populate a table of test runs with number of executed/failed/passed tests & a calculation of the quality of the execution, by the defined fields (from the yamls)
-3. executing python2 'run_report_by_team.py "YOUR TEMPLATE - Quality Dashboard"'
+3. executing python3 'run_report_by_team.py "YOUR TEMPLATE - Quality Dashboard"'
    will populate a table of test runs with number of executed/failed/passed tests & a calculation of the quality of the execution, by the defined fields & defined teams (from the yamls)
    
 
