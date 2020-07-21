@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import datetime 
+import time
 
 from pylarion.test_run import TestRun  
 from pylarion.work_item import TestCase, Requirement  
@@ -25,3 +26,6 @@ for team in team_list:
         update_data_by_dict(team, field_dicts[curr])
         row_number+=1
     row_number+=2
+
+now = datetime.datetime.now()
+g.update_sheet(50, 1, 'Last update: ' + now.strftime("%Y-%m-%d %H:%M"))
