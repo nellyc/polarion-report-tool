@@ -38,10 +38,10 @@ This tool will allow you to create a Quality dashboard for your product with Pol
 
 ## Usage:
 1. executing python3 'polarion_report.py "YOUR TEMPLATE - Quality Dashboard"' will: 
-   fetch requirements coverage
-   fetch approved/automated coverage
-   fetch current automation coverage
-   update current automation coverage on the automation coverage trend table & graph
+   - fetch requirements coverage
+   - fetch approved/automated coverage
+   - fetch current automation coverage
+   - update current automation coverage on the automation coverage trend table & graph
 2. executing python3 'run_report.py "YOUR TEMPLATE - Quality Dashboard"'
    will populate a table of test runs with number of executed/failed/passed tests & a calculation of the quality of the execution, by the defined fields (from the yamls)
 3. executing python3 'run_report_by_team.py "YOUR TEMPLATE - Quality Dashboard"'
